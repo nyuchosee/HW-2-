@@ -14,12 +14,17 @@ class Plane(Vehicle):
     @property
     def cargo(self):
         return self._cargo
-    
-    def load_cargo(self, amount):
-        if self._cargo + amount <= self.max_cargo:
-            self._cargo += amount
-        else:
+
+    @cargo.setter
+    def cargo(self, value):
+        if not isinstance(value, (int, float)) or value < 0:
+            raise ValueError("Груз должен быть положительным числом.")
+        if value > self.max_cargo:
             raise CargoOverload("Груз превышает максимальную вместимость.")
+        self._cargo = value
+
+    def load_cargo(self, amount):
+        self.cargo = self._cargo + amount
 
     def remove_all_cargo(self):
         remove_all = self._cargo
