@@ -10,16 +10,22 @@ class Vehicle:
     @property
     def started(self):
         return self._started
-    
+
+    @started.setter
+    def started(self, value):
+        if not isinstance(value, bool):
+            raise ValueError("Состояние двигателя должно быть True или False")
+        self._started = value
+
     def start(self):
-        if not self._started:
+        if not self.started:  # Теперь работаем через property
             if self.fuel > 0:
-                self._started = True
+                self.started = True  # Используем сеттер
             else:
                 raise LowFuelError("Недостаточно топлива для запуска автомобиля.")
 
     def move(self, distance):
-        if not self._started:
+        if not self.started:
             raise ValueError("Двигатель не запущен! Автомобиль не может двигаться.")
 
         required_fuel = distance * self.fuel_consumption / 100

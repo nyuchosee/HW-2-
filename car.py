@@ -18,8 +18,6 @@ class Car(Vehicle):
             raise LowFuelError("Недостаточно топлива для запуска двигателя!")
         self._started = True
 
-
-
     def set_engine(self, engine: Engine):
         if not isinstance(engine, Engine):
             raise ValueError("Переданный объект не является экземпляром класса Engine")
